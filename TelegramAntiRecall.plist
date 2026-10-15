@@ -1,0 +1,6 @@
+{
+  Filter = {
+    Bundles = ( "ph.telegra.Telegraph", "ph.telegra.Telegraph.Telegram" );
+    Executables = ( "Telegram" );
+  };
+}

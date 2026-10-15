@@ -1,0 +1,10 @@
+样本 PostboxFramework（Telegraph 13.0 / 35303）导出（rabin2 -E）：
+
+585  0x00163940  GLOBAL FUNC  _$s7Postbox11TransactionC14deleteMessages_12forEachMediaySayAA9MessageIdVG_yAA0G0_pcSgtF
+713  0x00164a0c  GLOBAL FUNC  _$s7Postbox11TransactionC27deleteMessagesWithGlobalIds_12forEachMediaySays5Int32VG_yAA0J0_pcSgtF
+
+（未 hook）
+650  0x00163b14  GLOBAL FUNC  _$s7Postbox11TransactionC21deleteMessagesInRange6peerId9namespace03minH003maxH012forEachMediayAA04PeerH0V_s5Int32VA2MyAA0N0_pcSgtF
+
+二进制标记 stripped=true，但 dyld export trie 仍有上述 GLOBAL 导出，故 dlsym / MSFindSymbol 可用。
+若某改版 strip 掉导出，只剩偏移 fallback，风险高。
