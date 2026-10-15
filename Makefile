@@ -6,7 +6,7 @@
 # 无 Theos 时见 README「clang 交叉编译」一节。
 
 TARGET := iphone:clang:latest:14.0
-ARCHS := arm64
+ARCHS := arm64 arm64e
 INSTALL_TARGET_PROCESSES = Telegram
 
 include $(THEOS)/makefiles/common.mk
