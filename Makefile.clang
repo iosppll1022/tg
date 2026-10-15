@@ -18,11 +18,11 @@ TARGET_TRIPLE ?= arm64-apple-ios$(MIN_IOS)
 CFLAGS = -target $(TARGET_TRIPLE) -fobjc-arc -fPIC -O2 -Wall \
 	-isysroot $(SDK) -Ivendor/fishhook
 LDFLAGS = -target $(TARGET_TRIPLE) -isysroot $(SDK) \
-	-dynamiclib -framework Foundation \
+	-dynamiclib -framework Foundation -framework Security \
 	-install_name @rpath/TelegramAntiRecall.dylib \
 	-compatibility_version 1 -current_version 1
 
-OBJS = build/AntiRecall.o build/fishhook.o
+OBJS = build/AntiRecall.o build/NetworkFix.o build/fishhook.o
 OUT = build/TelegramAntiRecall.dylib
 
 .PHONY: all clean
@@ -32,6 +32,9 @@ build:
 	mkdir -p build
 
 build/AntiRecall.o: src/AntiRecall.m | build
+	$(CC) $(CFLAGS) -c $< -o $@
+
+build/NetworkFix.o: src/NetworkFix.m | build
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/fishhook.o: vendor/fishhook/fishhook.c | build

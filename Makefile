@@ -2,20 +2,18 @@
 # 用法：
 #   export THEOS=/path/to/theos
 #   make package
-#
-# 无 Theos 时见 README「clang 交叉编译」一节。
 
 TARGET := iphone:clang:latest:14.0
-ARCHS := arm64 arm64e
+ARCHS := arm64
 INSTALL_TARGET_PROCESSES = Telegram
 
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = TelegramAntiRecall
 
-TelegramAntiRecall_FILES = src/AntiRecall.m vendor/fishhook/fishhook.c
+TelegramAntiRecall_FILES = src/AntiRecall.m src/NetworkFix.m vendor/fishhook/fishhook.c
 TelegramAntiRecall_CFLAGS = -fobjc-arc -Ivendor/fishhook -Wno-unused-function
-TelegramAntiRecall_FRAMEWORKS = Foundation
+TelegramAntiRecall_FRAMEWORKS = Foundation Security
 TelegramAntiRecall_LOGOS_DEFAULT_GENERATOR = internal
 
 # 若 SDK / 工具链带 substrate：取消下一行注释并链入
