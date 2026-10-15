@@ -1,11 +1,11 @@
-# 无 Theos 时：用 iOS SDK + clang 编出 arm64 dylib
+# 纯防撤回 dylib — 需 iOS SDK + arm64 clang
 #
-# macOS / Xcode：
+# macOS:
 #   make -f Makefile.clang \
 #     SDK="$(xcrun --sdk iphoneos --show-sdk-path)" \
 #     CC="$(xcrun --sdk iphoneos -f clang)"
 #
-# Linux + Theos 工具链：
+# Linux + Theos:
 #   make -f Makefile.clang \
 #     SDK=$THEOS/sdks/iPhoneOS16.5.sdk \
 #     CC=$THEOS/toolchain/linux/iphone/bin/clang
@@ -16,13 +16,13 @@ MIN_IOS ?= 14.0
 TARGET_TRIPLE ?= arm64-apple-ios$(MIN_IOS)
 
 CFLAGS = -target $(TARGET_TRIPLE) -fobjc-arc -fPIC -O2 -Wall \
-	-isysroot $(SDK) -Ivendor/fishhook
+	-isysroot $(SDK)
 LDFLAGS = -target $(TARGET_TRIPLE) -isysroot $(SDK) \
-	-dynamiclib -framework Foundation -framework Security \
+	-dynamiclib -framework Foundation \
 	-install_name @rpath/TelegramAntiRecall.dylib \
 	-compatibility_version 1 -current_version 1
 
-OBJS = build/AntiRecall.o build/NetworkFix.o build/fishhook.o
+OBJS = build/AntiRecall.o
 OUT = build/TelegramAntiRecall.dylib
 
 .PHONY: all clean
@@ -32,12 +32,7 @@ build:
 	mkdir -p build
 
 build/AntiRecall.o: src/AntiRecall.m | build
-	$(CC) $(CFLAGS) -c $< -o $@
-
-build/NetworkFix.o: src/NetworkFix.m | build
-	$(CC) $(CFLAGS) -c $< -o $@
-
-build/fishhook.o: vendor/fishhook/fishhook.c | build
+	@test -n "$(SDK)" || (echo "请设置 SDK=... 见 README" >&2; exit 1)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OUT): $(OBJS)

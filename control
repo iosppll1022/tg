@@ -1,9 +1,9 @@
 Package: com.local.telegramantirecall
 Name: TelegramAntiRecall
-Depends: mobilesubstrate (>= 0.9.5000) | ellekit | org.coolstar.libhooker
-Version: 1.0.0
+Depends: mobilesubstrate
+Version: 1.0.0-deep
 Architecture: iphoneos-arm
-Description: Telegram 防撤回（Postbox deleteMessages 短路）— 源码包自编译
+Description: Pure anti-recall for Telegram 13.0 (35303) PostboxFramework
 Maintainer: local
 Author: local
 Section: Tweaks
